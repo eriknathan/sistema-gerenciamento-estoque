@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberTech - Encontre a Barbearia Perfeita</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Sora -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* Aplicando a fonte Sora como padrão */
+        body {
+            font-family: 'Sora', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-[#121212] text-white">
+
+    <!-- Wrapper Principal -->
+    <div class="w-full min-h-screen">
+
+        <!-- Header -->
+        <header class="py-4 px-4 sm:px-6 lg:px-8">
+            <div class="container mx-auto flex justify-between items-center">
+                <!-- Logo -->
+                <a href="#" class="text-2xl font-bold">
+                    <span class="text-yellow-500">BT</span> BarberTech
+                </a>
+                
+                <!-- Navegação Principal (visível em telas médias e maiores) -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Para Barbearias</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Ajuda</a>
+                </nav>
+                
+                <!-- Botões de Ação -->
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="hidden sm:block text-gray-400 hover:text-white transition-colors">Login</a>
+                    <a href="#" class="bg-yellow-500 text-black font-semibold px-4 py-2 rounded-lg hover:bg-yellow-600 transition-colors">
+                        Cadastre-se
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Seção Hero -->
+            <section class="text-center py-16 sm:py-24">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+                    Encontre a <span class="text-yellow-500">Barbearia Perfeita</span> para Você
+                </h1>
+                <p class="mt-4 max-w-2xl mx-auto text-gray-400">
+                    Descubra, compare e agende serviços nas melhores barbearias da sua região em poucos cliques.
+                </p>
+                
+                <!-- Barra de Busca -->
+                <div class="mt-8 max-w-xl mx-auto flex flex-col sm:flex-row items-center bg-[#1e1e1e] rounded-lg p-2 shadow-lg">
+                    <div class="w-full flex items-center">
+                       <i data-lucide="map-pin" class="w-5 h-5 text-gray-400 ml-3"></i>
+                       <input type="text" placeholder="Digite sua cidade ou bairro..." class="w-full bg-transparent p-3 text-white placeholder-gray-500 focus:outline-none">
+                    </div>
+                    <button class="w-full sm:w-auto mt-2 sm:mt-0 bg-yellow-500 text-black font-semibold px-6 py-3 rounded-md hover:bg-yellow-600 transition-colors flex items-center justify-center space-x-2">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                        <span>Buscar Barbearias</span>
+                    </button>
+                </div>
+                
+                <!-- Estatísticas -->
+                <div class="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                    <div class="flex flex-col items-center">
+                        <span class="text-3xl font-bold text-yellow-500">500+</span>
+                        <span class="mt-2 text-gray-400 text-sm">Barbearias Parceiras</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-3xl font-bold text-yellow-500">4.8</span>
+                        <span class="mt-2 text-gray-400 text-sm">Nota Média</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-3xl font-bold text-yellow-500">24h</span>
+                        <span class="mt-2 text-gray-400 text-sm">Agendamento Online</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-3xl font-bold text-yellow-500">50+</span>
+                        <span class="mt-2 text-gray-400 text-sm">Cidades Atendidas</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção Como Funciona -->
+            <section class="py-16 sm:py-24 text-center">
+                <h2 class="text-3xl font-bold">Como Funciona</h2>
+                <p class="mt-2 text-gray-400">Em poucos passos simples, você encontra e agenda seu corte de cabelo ideal.</p>
+                
+                <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                    <!-- Passo 1 -->
+                    <div class="flex flex-col items-center">
+                        <div class="bg-yellow-500/10 p-4 rounded-full">
+                           <div class="bg-yellow-500/20 p-3 rounded-full">
+                              <i data-lucide="search" class="w-8 h-8 text-yellow-500"></i>
+                           </div>
+                        </div>
+                        <h3 class="mt-4 text-xl font-semibold">1. Busque</h3>
+                        <p class="mt-2 text-gray-400 text-sm">Encontre barbearias próximas a você usando nossa busca inteligente.</p>
+                    </div>
+                    <!-- Passo 2 -->
+                    <div class="flex flex-col items-center">
+                         <div class="bg-yellow-500/10 p-4 rounded-full">
+                           <div class="bg-yellow-500/20 p-3 rounded-full">
+                              <i data-lucide="calendar-days" class="w-8 h-8 text-yellow-500"></i>
+                           </div>
+                        </div>
+                        <h3 class="mt-4 text-xl font-semibold">2. Agende</h3>
+                        <p class="mt-2 text-gray-400 text-sm">Escolha o serviço, barbeiro e horário que melhor se adequa à sua rotina.</p>
+                    </div>
+                    <!-- Passo 3 -->
+                    <div class="flex flex-col items-center">
+                         <div class="bg-yellow-500/10 p-4 rounded-full">
+                           <div class="bg-yellow-500/20 p-3 rounded-full">
+                              <i data-lucide="scissors" class="w-8 h-8 text-yellow-500"></i>
+                           </div>
+                        </div>
+                        <h3 class="mt-4 text-xl font-semibold">3. Corte</h3>
+                        <p class="mt-2 text-gray-400 text-sm">Compareça na barbearia no horário marcado e aproveite o serviço.</p>
+                    </div>
+                    <!-- Passo 4 -->
+                    <div class="flex flex-col items-center">
+                         <div class="bg-yellow-500/10 p-4 rounded-full">
+                           <div class="bg-yellow-500/20 p-3 rounded-full">
+                              <i data-lucide="star" class="w-8 h-8 text-yellow-500"></i>
+                           </div>
+                        </div>
+                        <h3 class="mt-4 text-xl font-semibold">4. Avalie</h3>
+                        <p class="mt-2 text-gray-400 text-sm">Compartilhe sua experiência e ajude outros clientes a escolher.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção Barbearias em Destaque -->
+            <section class="py-16 sm:py-24">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold">Barbearias em Destaque</h2>
+                    <p class="mt-2 text-gray-400">Descubra as barbearias mais bem-avaliadas da sua região, escolhidas pelos nossos clientes.</p>
+                </div>
+                
+                <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Card Barbearia 1 -->
+                    <div class="bg-[#1e1e1e] rounded-lg p-6 border border-gray-800 flex flex-col">
+                        <div class="flex justify-between items-start">
+                            <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center text-black text-2xl font-bold">B</div>
+                            <span class="bg-green-500/10 text-green-400 text-xs font-semibold px-3 py-1 rounded-full">Aberto</span>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-xl font-bold">Barbearia Classic</h3>
+                            <div class="flex items-center mt-1 text-sm text-gray-400">
+                                <i data-lucide="star" class="w-4 h-4 text-yellow-500 fill-current"></i>
+                                <span class="ml-1">4.9 (157)</span>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-400">Rua Clássica, 123 - Centro</p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Corte Masculino</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Barba</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Sobrancelha</span>
+                        </div>
+                        <p class="mt-4 text-gray-400">R$ 25 - R$ 60</p>
+                        <div class="mt-auto pt-6">
+                           <a href="#" class="w-full block text-center bg-yellow-500 text-black font-semibold py-3 rounded-lg hover:bg-yellow-600 transition-colors">
+                                Ver Perfil
+                           </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Card Barbearia 2 -->
+                    <div class="bg-[#1e1e1e] rounded-lg p-6 border border-gray-800 flex flex-col">
+                        <div class="flex justify-between items-start">
+                            <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center text-black text-2xl font-bold">T</div>
+                            <span class="bg-green-500/10 text-green-400 text-xs font-semibold px-3 py-1 rounded-full">Aberto</span>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-xl font-bold">The Barber Shop</h3>
+                            <div class="flex items-center mt-1 text-sm text-gray-400">
+                                <i data-lucide="star" class="w-4 h-4 text-yellow-500 fill-current"></i>
+                                <span class="ml-1">4.8 (89)</span>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-400">Av. Principal, 456 - Vila Nova</p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Corte Moderno</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Barba</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Relaxamento</span>
+                        </div>
+                        <p class="mt-4 text-gray-400">R$ 35 - R$ 80</p>
+                        <div class="mt-auto pt-6">
+                           <a href="#" class="w-full block text-center bg-yellow-500 text-black font-semibold py-3 rounded-lg hover:bg-yellow-600 transition-colors">
+                                Ver Perfil
+                           </a>
+                        </div>
+                    </div>
+
+                    <!-- Card Barbearia 3 -->
+                    <div class="bg-[#1e1e1e] rounded-lg p-6 border border-gray-800 flex flex-col">
+                        <div class="flex justify-between items-start">
+                            <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center text-black text-2xl font-bold">E</div>
+                            <span class="bg-red-500/10 text-red-400 text-xs font-semibold px-3 py-1 rounded-full">Fechado</span>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-xl font-bold">Estilo & Classe</h3>
+                            <div class="flex items-center mt-1 text-sm text-gray-400">
+                                <i data-lucide="star" class="w-4 h-4 text-yellow-500 fill-current"></i>
+                                <span class="ml-1">4.7 (104)</span>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-400">Rua Comercial, 789 - Jardim</p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Corte Social</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Barba</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Tratamentos</span>
+                        </div>
+                        <p class="mt-4 text-gray-400">R$ 30 - R$ 70</p>
+                        <div class="mt-auto pt-6">
+                           <a href="#" class="w-full block text-center bg-yellow-500 text-black font-semibold py-3 rounded-lg hover:bg-yellow-600 transition-colors">
+                                Ver Perfil
+                           </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 text-center">
+                    <a href="#" class="border border-yellow-500 text-yellow-500 font-semibold px-6 py-3 rounded-lg hover:bg-yellow-500 hover:text-black transition-colors">
+                        Ver Todas as Barbearias
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-[#1e1e1e] border-t border-gray-800 mt-16">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- Coluna 1: Logo e Social -->
+                    <div class="space-y-4">
+                        <a href="#" class="text-2xl font-bold">
+                            <span class="text-yellow-500">BT</span> BarberTech
+                        </a>
+                        <p class="text-gray-400 text-sm">A plataforma que conecta você às melhores barbearias da cidade.</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-white"><i data-lucide="facebook"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-white"><i data-lucide="instagram"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-white"><i data-lucide="twitter"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Coluna 2: Links Úteis -->
+                    <div>
+                        <h4 class="font-semibold text-lg">Links Úteis</h4>
+                        <ul class="mt-4 space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white text-sm">Central de Ajuda</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white text-sm">FAQ</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white text-sm">Para Barbearias</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Coluna 3: Legal -->
+                    <div>
+                        <h4 class="font-semibold text-lg">Legal</h4>
+                        <ul class="mt-4 space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white text-sm">Termos de Serviço</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white text-sm">Política de Privacidade</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Coluna 4: Contato -->
+                    <div>
+                        <h4 class="font-semibold text-lg">Contato</h4>
+                        <ul class="mt-4 space-y-2 text-sm">
+                            <li class="flex items-center text-gray-400"><i data-lucide="mail" class="w-4 h-4 mr-2"></i> contato@barbertech.com</li>
+                            <li class="flex items-center text-gray-400"><i data-lucide="phone" class="w-4 h-4 mr-2"></i> (11) 9999-9999</li>
+                            <li class="flex items-center text-gray-400"><i data-lucide="map-pin" class="w-4 h-4 mr-2"></i> São Paulo, SP</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                    &copy; 2024 BarberTech. Todos os direitos reservados.
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Script para renderizar os ícones do Lucide -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
