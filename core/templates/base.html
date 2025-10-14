@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- <title>SGE - Sistema de Gestão de Estoque</title> -->
+        <title>{% block title %}{% endblock %}</title>
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        
+        <!-- Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <style>
+            /* Estilos Globais */
+            :root {
+                --bg-dark: #0d1117;
+                --bg-primary: #161b22;
+                --bg-secondary: #21262d;
+                --border-color: #30363d;
+                --text-light: #e6edf3;
+                --text-muted: #8b949e;
+                --color-blue: #58a6ff;
+                --color-green: #3fb950;
+                --color-yellow: #d29922;
+                --color-red: #f85149;
+                --color-gray: #6e7681;
+            }
+
+            body.light-mode {
+                --bg-dark: #f8f9fa;
+                --bg-primary: #ffffff;
+                --bg-secondary: #f1f3f5;
+                --border-color: #dee2e6;
+                --text-light: #212529;
+                --text-muted: #6c757d;
+            }
+
+            body {
+                background-color: var(--bg-dark);
+                color: var(--text-light);
+                font-family: 'Inter', sans-serif;
+                transition: background-color 0.3s, color 0.3s;
+            }
+            
+            /* Layout Principal */
+            .sidebar {
+                width: 250px;
+                height: 100vh;
+                position: fixed;
+                top: 0;
+                left: 0;
+                background-color: var(--bg-primary);
+                border-right: 1px solid var(--border-color);
+                padding: 1rem;
+                z-index: 1030; /* Acima do header */
+                display: flex;
+                flex-direction: column;
+                transition: background-color 0.3s, border-color 0.3s;
+            }
+
+            .content-wrapper {
+                margin-left: 250px;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .global-header {
+                background-color: var(--bg-primary);
+                border-bottom: 1px solid var(--border-color);
+                padding: 0.75rem 2rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                transition: background-color 0.3s, border-color 0.3s;
+                z-index: 1020;
+            }
+            
+            .global-header .header-user {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .global-header .header-user .user-avatar {
+                width: 36px;
+                height: 36px;
+                background-color: var(--bg-secondary);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 600;
+            }
+
+            .main-content {
+                padding: 2rem;
+                flex: 1; /* Faz o conteúdo principal crescer */
+                overflow-y: auto; /* Adiciona scroll apenas aqui */
+            }
+            
+            .global-footer {
+                background-color: var(--bg-primary);
+                border-top: 1px solid var(--border-color);
+                padding: 1rem 2rem;
+                color: var(--text-muted);
+                font-size: 0.85rem;
+                text-align: center;
+                transition: background-color 0.3s, border-color 0.3s;
+            }
+
+            /* Componentes da Sidebar */
+            .sidebar-header {
+                display: flex; align-items: center; padding: 0.5rem; margin-bottom: 1.5rem;
+            }
+            .sidebar-header .logo {
+                width: 40px; height: 40px; background-color: var(--color-blue); color: white;
+                display: flex; align-items: center; justify-content: center;
+                border-radius: 0.5rem; font-weight: 600; margin-right: 0.75rem;
+            }
+            .sidebar-header .title-block .title {
+                font-weight: 600; font-size: 1.1rem; line-height: 1.2;
+            }
+            .sidebar-header .title-block .subtitle {
+                font-size: 0.8rem; color: var(--text-muted);
+            }
+            .sidebar .nav-link {
+                color: var(--text-muted); padding: 0.65rem 1rem; margin-bottom: 0.25rem;
+                border-radius: 0.375rem; transition: all 0.2s; display: flex;
+                align-items: center; font-size: 0.9rem;
+            }
+            .sidebar .nav-link:hover {
+                background-color: var(--bg-secondary); color: var(--text-light);
+            }
+            .sidebar .nav-link.active {
+                background-color: var(--border-color); color: var(--text-light); font-weight: 500;
+            }
+            .sidebar .nav-link .bi {
+                margin-right: 0.85rem; font-size: 1.1rem;
+            }
+
+            .sidebar-footer {
+                margin-top: auto;
+            }
+            
+            /* Componentes de Conteúdo */
+            .page-content { display: none; }
+            .page-content.active { display: block; }
+            
+            .page-header { margin-bottom: 2rem; }
+            .page-header h1 { font-size: 1.8rem; font-weight: 600; }
+            .page-header p { color: var(--text-muted); }
+
+            .content-wrapper-card {
+                background-color: var(--bg-primary); border: 1px solid var(--border-color);
+                border-radius: 0.5rem; padding: 1.5rem;
+                transition: background-color 0.3s, border-color 0.3s;
+            }
+            
+            /* Cards de Métricas (Dashboard) */
+            .metric-card {
+                background: var(--bg-primary);
+                border: 1px solid var(--border-color); border-radius: 0.5rem;
+                padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+                transition: all 0.3s;
+            }
+            .metric-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+            .metric-card .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+            .metric-card .card-title { color: var(--text-muted); font-size: 0.9rem; }
+            .metric-card .card-icon { font-size: 1.2rem; padding: 0.5rem; border-radius: 50%; }
+            .metric-card .card-value { font-size: 1.75rem; font-weight: 600; }
+            .metric-card .card-subtitle { font-size: 0.8rem; color: var(--text-muted); }
+            .icon-blue { background-color: rgba(88, 166, 255, 0.1); color: var(--color-blue); }
+            .icon-red { background-color: rgba(248, 81, 73, 0.1); color: var(--color-red); }
+            .icon-green { background-color: rgba(63, 185, 80, 0.1); color: var(--color-green); }
+            .icon-yellow { background-color: rgba(210, 153, 34, 0.1); color: var(--color-yellow); }
+            
+            /* Cards de Métricas Simples (Produtos) */
+            .metric-card-simple {
+                border-radius: 0.5rem;
+                padding: 1.25rem;
+                margin-bottom: 1.5rem;
+                color: white;
+                transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            }
+            .metric-card-simple:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+            .metric-card-simple .card-title {
+                font-size: 0.9rem;
+                margin-bottom: 0.25rem;
+                opacity: 0.9;
+            }
+            .metric-card-simple .card-value {
+                font-size: 2rem;
+                font-weight: 600;
+            }
+            .metric-card-simple.bg-blue { background-color: var(--color-blue); }
+            .metric-card-simple.bg-red { background-color: var(--color-red); }
+            .metric-card-simple.bg-green { background-color: var(--color-green); }
+            .metric-card-simple.bg-yellow { background-color: var(--color-yellow); color: var(--bg-dark); }
+
+
+            /* Formulários e Tabela */
+            .form-label {
+                color: var(--text-muted);
+                margin-bottom: 0.5rem;
+            }
+            .form-control, .form-select {
+                background-color: var(--bg-dark); border-color: var(--border-color); color: var(--text-light);
+            }
+            .form-control:focus, .form-select:focus {
+                background-color: var(--bg-dark); border-color: var(--color-blue);
+                color: var(--text-light); box-shadow: 0 0 0 0.25rem rgba(88, 166, 255, 0.25);
+            }
+            .form-select {
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%238b949e' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+            }
+            body.light-mode .form-select {
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+            }
+
+            .btn-primary {
+                background-color: var(--color-blue); border-color: var(--color-blue);
+                color: white; font-weight: 500;
+            }
+            body.light-mode .btn-primary {
+                color: var(--bg-dark);
+            }
+
+            .btn-success {
+                background-color: var(--color-green); border-color: var(--color-green);
+                color: white; font-weight: 500;
+            }
+            .btn-secondary {
+                background-color: var(--bg-secondary); border-color: var(--border-color);
+                color: var(--text-light); font-weight: 500;
+            }
+            .btn-secondary:hover {
+                background-color: var(--border-color);
+            }
+            .table {
+                --bs-table-bg: transparent; --bs-table-border-color: var(--border-color);
+                --bs-table-color: var(--text-light); --bs-table-hover-bg: var(--bg-secondary);
+                --bs-table-hover-color: var(--text-light); color: var(--bs-table-color); margin-top: 1.5rem;
+            }
+            .table > thead { color: var(--text-muted); }
+            .table > tbody > tr > td, .table > tbody > tr > th { vertical-align: middle; }
+            .action-buttons .btn { color: var(--text-muted); border: none; transition: color 0.2s ease-in-out; }
+            .action-buttons .btn-edit:hover { color: var(--color-yellow); }
+            .action-buttons .btn-delete:hover { color: var(--color-red); }
+            .status-badge {
+                background-color: rgba(63, 185, 80, 0.1);
+                color: var(--color-green);
+                padding: 0.4rem 0.8rem;
+                border-radius: 2rem;
+                font-size: 0.85rem;
+                font-weight: 500;
+                display: inline-flex;
+                align-items: center;
+            }
+            .status-badge .bi {
+                margin-right: 0.4rem;
+            }
+            .metric-group-title {
+                font-size: 1.1rem;
+                font-weight: 500;
+                color: var(--text-muted);
+                margin-bottom: 1rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .chart-container {
+                background-color: var(--bg-primary);
+                border: 1px solid var(--border-color);
+                border-radius: 0.5rem;
+                padding: 1.5rem;
+                height: 350px;
+                transition: background-color 0.3s, border-color 0.3s;
+            }
+        </style>
+    </head>
+
+    <body>
+        {% include 'components/_sidebar.html' %}
+        <!-- Conteúdo Principal Envolvido por Wrapper -->
+        <div class="content-wrapper">
+            <!-- {% include 'components/_header.html' %} -->
+            <!-- Conteúdo Principal -->
+            <main class="main-content">
+                {% block content %}
+                {% endblock %}
+            </main>
+            {% include 'components/_footer.html' %}            
+        </div>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // Variáveis globais para as instâncias dos gráficos
+                let salesValueChartInstance, dailySalesChartInstance, categoryChartInstance, brandChartInstance;
+
+                const themeToggleButton = document.getElementById('theme-toggle');
+                const themeIcon = themeToggleButton.querySelector('i');
+
+
+                // Lógica dos Gráficos do Dashboard
+                function initDashboardCharts() {
+                    if (document.getElementById('salesValueChart')) {
+                        // Destruir gráficos existentes antes de recriar
+                        if (salesValueChartInstance) salesValueChartInstance.destroy();
+                        if (dailySalesChartInstance) dailySalesChartInstance.destroy();
+                        if (categoryChartInstance) categoryChartInstance.destroy();
+                        if (brandChartInstance) brandChartInstance.destroy();
+
+                        const isLightTheme = document.body.classList.contains('light-mode');
+                        const textColor = isLightTheme ? '#212529' : '#e6edf3';
+                        const mutedColor = isLightTheme ? '#6c757d' : '#8b949e';
+                        const gridColor = isLightTheme ? '#dee2e6' : '#30363d';
+                        const primaryBgColor = isLightTheme ? '#ffffff' : '#161b22';
+
+                        function getLast7Days() {
+                            const dates = [];
+                            for (let i = 6; i >= 0; i--) {
+                                const d = new Date();
+                                d.setDate(d.getDate() - i);
+                                dates.push(`${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}`);
+                            }
+                            return dates;
+                        }
+
+                        const chartLabels = getLast7Days();
+                        const chartOptions = {
+                            maintainAspectRatio: false, responsive: true,
+                            scales: {
+                                y: { beginAtZero: true, ticks: { color: mutedColor }, grid: { color: gridColor } },
+                                x: { ticks: { color: mutedColor }, grid: { display: false } }
+                            },
+                            plugins: { legend: { labels: { color: textColor } } }
+                        };
+
+                        const salesValueCtx = document.getElementById('salesValueChart').getContext('2d');
+                        salesValueChartInstance = new Chart(salesValueCtx, {
+                            type: 'line',
+                            data: { labels: chartLabels, datasets: [{ label: 'Valor em vendas', data: [1200, 1800, 1550, 2200, 2050, 2800, 3100], borderColor: '#58a6ff', backgroundColor: 'rgba(88, 166, 255, 0.1)', fill: true, tension: 0.4 }] },
+                            options: { ...chartOptions, plugins: { ...chartOptions.plugins, title: { display: true, text: 'Valor de Vendas (Últimos 7 dias)', color: textColor, font: { size: 16 } } } }
+                        });
+
+                        const dailySalesCtx = document.getElementById('dailySalesChart').getContext('2d');
+                        dailySalesChartInstance = new Chart(dailySalesCtx, {
+                            type: 'bar',
+                            data: { labels: chartLabels, datasets: [{ label: 'Quantidade de Vendas', data: [45, 62, 55, 78, 65, 88, 95], backgroundColor: 'rgba(248, 81, 73, 0.6)', borderColor: '#f85149', borderWidth: 1, borderRadius: 4 }] },
+                            options: { ...chartOptions, plugins: { ...chartOptions.plugins, title: { display: true, text: 'Quantidade de vendas diárias', color: textColor, font: { size: 16 } } } }
+                        });
+                        
+                        const doughnutChartOptions = {
+                            maintainAspectRatio: false, responsive: true,
+                            plugins: { legend: { position: 'top', labels: { color: textColor } }, title: { display: true, color: textColor, font: { size: 16 } } },
+                            cutout: '70%'
+                        };
+
+                        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+                        categoryChartInstance = new Chart(categoryCtx, {
+                            type: 'doughnut',
+                            data: { labels: ['Eletrônicos', 'Papelaria', 'Suprimentos', 'Outros'], datasets: [{ label: 'Produtos por Categoria', data: [300, 50, 100, 40], backgroundColor: ['#58a6ff', '#3fb950', '#d29922', '#f85149'], borderColor: primaryBgColor, borderWidth: 4 }] },
+                            options: { ...doughnutChartOptions, plugins: { ...doughnutChartOptions.plugins, title: { ...doughnutChartOptions.plugins.title, text: 'Produtos por Categoria' } } }
+                        });
+
+                        const brandCtx = document.getElementById('brandChart').getContext('2d');
+                        brandChartInstance = new Chart(brandCtx, {
+                            type: 'doughnut',
+                            data: { labels: ['Marca A', 'Logitech', 'Marca B', 'Razer'], datasets: [{ label: 'Produtos por Marca', data: [120, 250, 80, 150], backgroundColor: ['#58a6ff', '#f85149', '#3fb950', '#d29922'], borderColor: primaryBgColor, borderWidth: 4 }] },
+                            options: { ...doughnutChartOptions, plugins: { ...doughnutChartOptions.plugins, title: { ...doughnutChartOptions.plugins.title, text: 'Produtos por Marca' } } }
+                        });
+                    }
+                }
+
+                // Lógica do Seletor de Tema
+                function applyTheme(theme) {
+                    if (theme === 'light') {
+                        document.body.classList.add('light-mode');
+                        themeIcon.classList.remove('bi-moon-stars-fill');
+                        themeIcon.classList.add('bi-sun-fill');
+                    } else {
+                        document.body.classList.remove('light-mode');
+                        themeIcon.classList.remove('bi-sun-fill');
+                        themeIcon.classList.add('bi-moon-stars-fill');
+                    }
+                    // Recria os gráficos com as cores do novo tema
+                    initDashboardCharts();
+                }
+
+                themeToggleButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const currentTheme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+                    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                    localStorage.setItem('theme', newTheme);
+                    applyTheme(newTheme);
+                });
+
+                // Aplica o tema salvo ao carregar a página
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                applyTheme(savedTheme);
+            });
+        </script>
+    </body>
+</html>

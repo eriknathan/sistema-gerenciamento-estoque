@@ -1,0 +1,52 @@
+<!-- Barra Lateral -->
+<nav class="sidebar">
+    <div>
+        <div class="sidebar-header">
+            <div class="logo">SGE</div>
+            <div class="title-block">
+                <div class="title">Sistema de Gestão</div>
+                <div class="subtitle">SGE - Controle Inteligente</div>
+            </div>
+        </div>
+        <div class="nav flex-column">
+            <a class="nav-link" href="#dashboard">
+                <i class="bi bi-speedometer2"></i>
+                Dashboard
+            </a>
+            <a class="nav-link" href="#fornecedores">
+                <i class="bi bi-truck"></i>
+                Fornecedores
+            </a>
+            <a class="nav-link" href="{% url 'brand_list' %}">
+                <i class="bi bi-bookmark-star"></i>
+                Marcas
+            </a>
+            <a class="nav-link" href="#categorias">
+                <i class="bi bi-tags"></i> 
+                Categorias
+            </a>
+            <a class="nav-link" href="#produtos">
+                <i class="bi bi-box-seam"></i> 
+                Produtos
+            </a>
+            <a class="nav-link" href="#entradas">
+                <i class="bi bi-arrow-down-square"></i> 
+                Entradas
+            </a>
+            <a class="nav-link" href="#saidas">
+                <i class="bi bi-arrow-up-square"></i> 
+                Saídas
+            </a>
+        </div>
+    </div>
+    <div class="sidebar-footer">
+        <a class="nav-link" id="logout-button" href="#" title="Sair do sistema">
+            <i class="bi bi-box-arrow-left"></i>
+            <span>Sair</span>
+        </a>
+        <a class="nav-link" id="theme-toggle" href="#" title="Mudar tema">
+            <i class="bi bi-moon-stars-fill"></i>
+            <span>Mudar Tema</span>
+        </a>
+    </div>
+</nav>

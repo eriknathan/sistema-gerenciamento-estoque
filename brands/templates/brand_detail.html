@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+SGE - Detalhes da Marca
+{% endblock %}
+
+{% block content %}
+    <div id="marca-cadastro">
+        <div class="page-header">
+            <h1>Detalhes da Marca - {{ brand.name }}</h1>
+            <p>Abaixo está os detalhes refernte a marca {{ brand.name }}.</p>
+        </div >
+        <div class="content-wrapper-card">
+            <h5><b>Descrição da Marca:</b> {{ brand.description }}</h5>
+            <h5><b>Status da Marca:</b> {% if brand.is_active %}
+                <span title="Ativo">Marca Ativa ✅</span>
+            {% else %}
+                <span title="Inativo">Marca Desativada ❌</span>
+            {% endif %}
+            </h5>
+        </div>
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <a href="{% url 'brand_list' %}" class="btn btn-secondary" id="btn-cancelar-marca">Cancelar e Voltar para a Lista de Marcas </a>
+        </div>
+    </div>
+{% endblock %}

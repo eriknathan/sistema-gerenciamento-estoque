@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+SGE - Cadastrar Nova Marca
+{% endblock %}
+
+{% block content %}
+    <div id="marca-cadastro">
+        <div class="page-header">
+            <h1>Cadastrar Marca</h1>
+            <p>Preencha os dados para adicionar uma nova marca.</p>
+        </div>
+        <div class="content-wrapper-card">
+            <form method="post" class="form">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
+                    {{ form.name }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.description.id_for_label }}" class="form-label">{{ form.description.label }}</label>
+                    {{ form.description }}
+                </div>
+
+                <div class="form-check form-switch mb-3">
+                    {{ form.is_active }}
+                    <label class="form-check-label" for="{{ form.is_active.id_for_label }}">Marca Ativa</label>
+                    <small class="form-text text-muted d-block">
+                        Desmarque esta opção se a marca estiver inativa ou não puder ser usada em novos cadastros.
+                    </small>
+                </div>
+                
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a href="{% url 'brand_list' %}" class="btn btn-secondary" id="btn-cancelar-marca">Cancelar e Voltar </a>
+                    <button type="submit" class="btn btn-primary">Salvar Marca</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
