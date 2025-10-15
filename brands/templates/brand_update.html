@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block title %}
-SGE - Cadastrar Nova Marca
+SGE - Atualização de Marca
 {% endblock %}
 
 {% block content %}
     <div id="marca-cadastro">
         <div class="page-header">
-            <h1>Cadastrar Marca</h1>
-            <p>Preencha os dados para adicionar uma nova marca.</p>
+            <h1>Editar Marca</h1>
+            <p>Atualize os dados da marca.</p>
         </div>
         <div class="content-wrapper-card">
             <form method="post" class="form">
@@ -32,9 +32,9 @@ SGE - Cadastrar Nova Marca
                 </div>
                 
                 <div class="d-flex justify-content-end gap-2 mt-4">
-                    <a href="{% url 'brand_list' %}" class="btn btn-secondary" id="btn-cancelar-marca">Cancelar e Voltar </a>
+                    <a href="{% url 'brand_list' %}" class="btn btn-secondary" id="btn-cancelar-marca">Cancelar e Voltar para Lista de Marca </a>
                     <button type="submit" class="btn btn-primary">Salvar Marca</button>
-                </div>
+                </div>               
             </form>
         </div>
     </div>

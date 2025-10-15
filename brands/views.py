@@ -1,17 +1,10 @@
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.urls import reverse_lazy
 from . import models
 from . import forms
 
 
 class BrandListView(ListView):
-    """
-    Exibe uma lista de todas as marcas cadastradas.
-
-    Esta view herda da ListView genérica do Django para listar
-    objetos do modelo 'Brand'. Ela também permite filtrar as
-    marcas pelo nome através de um parâmetro na URL (query string).
-    """
     model = models.Brand
     template_name = 'brand_list.html'
     context_object_name = 'brands'
@@ -38,3 +31,9 @@ class BrandDetailView(DetailView):
     template_name = 'brand_detail.html'
     context_object_name = 'brand'
 
+
+class BrandUpdateView(UpdateView):
+    model = models.Brand
+    template_name = 'brand_update.html'
+    form_class = forms.BrandForm
+    success_url = reverse_lazy('brand_list')
