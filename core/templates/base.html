@@ -282,6 +282,40 @@
                 height: 350px;
                 transition: background-color 0.3s, border-color 0.3s;
             }
+            /* Paginação */
+            .pagination .page-link {
+                background-color: var(--bg-primary);
+                border-color: var(--border-color);
+                color: var(--text-muted);
+                transition: all 0.3s;
+            }
+
+            .pagination .page-link:hover {
+                background-color: var(--bg-secondary);
+                color: var(--text-light);
+                border-color: var(--border-color);
+            }
+
+            .pagination .page-link:focus {
+                box-shadow: 0 0 0 0.25rem rgba(88, 166, 255, 0.25);
+                border-color: var(--color-blue);
+            }
+
+            .pagination .page-item.active .page-link {
+                background-color: var(--color-blue);
+                border-color: var(--color-blue);
+                color: white;
+            }
+
+            body.light-mode .pagination .page-item.active .page-link {
+                color: var(--bg-dark);
+            }
+
+            .pagination .page-item.disabled .page-link {
+                background-color: var(--bg-secondary);
+                border-color: var(--border-color);
+                color: var(--color-gray);
+            }
         </style>
     </head>
 

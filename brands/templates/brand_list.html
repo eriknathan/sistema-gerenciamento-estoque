@@ -46,7 +46,7 @@ SGE - Marcas
                         {% for brand in brands %}
                         <tr>
                             <td scope="row">{{ brand.id }}</td>
-                            <td>{{ brand.name }}</td>
+                            <td><strong>{{ brand.name }}</strong></td>
                             <td>{{ brand.description }}</td>
                             <td>
                                 {% if brand.is_active %}
@@ -71,6 +71,7 @@ SGE - Marcas
                     </tbody>
                 </table>
             </div>
+            {% include 'components/_pagination.html' %}
         </div>
     </div>
 
