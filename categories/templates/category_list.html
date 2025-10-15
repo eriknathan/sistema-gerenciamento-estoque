@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}
+SGE - Categorias
+{% endblock %}
+
+{% block content %}
+
+    <div id="categorias">
+        <div class="page-header">
+            <h1>Categorias</h1>
+            <p>Gerencie as categorias dos seus produtos.</p>
+        </div>
+
+        <div class="content-wrapper-card">
+            <div class="row">
+                <div class="col-md-8">
+                    <form method="get" action="{% url 'category_list' %}">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="name" value="{{ request.GET.name }}" placeholder="Buscar por nome...">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-4 text-md-end mt-2 mt-md-0">
+                    <a href="{% url 'category_create' %}"class="btn btn-success" id="btn-nova-categoria">
+                        <i class="bi bi-plus-lg"></i> Nova Categorias</a>
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for category in categorys %}
+                        <tr>
+                            <td scope="row">{{ category.id }}</td>
+                            <td><strong>{{ category.name }}</strong></td>
+                            <td>{{ category.description }}</td>
+                            <td>
+                                {% if category.is_active %}
+                                    <span title="Ativo">✅</span>
+                                {% else %}
+                                    <span title="Inativo">❌</span>
+                                {% endif %}
+                            </td>
+                            <td class="action-buttons">
+                                <a href="{% url 'category_detail' category.id %}" class="btn btn-sm btn-detail">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="{% url 'category_update' category.id %}" class="btn btn-sm btn-edit">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="{% url 'category_delete' category.id %}" class="btn btn-sm btn-delete">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% include 'components/_pagination.html' %}
+        </div>
+    </div>
+
+{% endblock %}

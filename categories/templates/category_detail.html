@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+SGE - Detalhes da Categoria
+{% endblock %}
+
+{% block content %}
+    <div id="categoria-cadastro">
+        <div class="page-header">
+            <h1>Detalhes da Categoria - {{ category.name }}</h1>
+            <p>Abaixo está os detalhes refernte a categoria {{ category.name }}.</p>
+        </div >
+        <div class="content-wrapper-card">
+            <h5><b>Descrição da Categoria:</b> {{ category.description }}</h5>
+            <h5><b>Status da Categoria:</b> {% if category.is_active %}
+                <span title="Ativo">Categoria Ativa ✅</span>
+            {% else %}
+                <span title="Inativo">Categoria Desativada ❌</span>
+            {% endif %}
+            </h5>
+        </div>
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <a href="{% url 'category_list' %}" class="btn btn-secondary" id="btn-cancelar-categoria">Cancelar e Voltar para a Lista de Categorias </a>
+        </div>
+    </div>
+{% endblock %}
