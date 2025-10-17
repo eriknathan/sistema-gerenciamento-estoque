@@ -374,6 +374,13 @@
             background-color: var(--border-color);
         }
 
+        .btn-danger {
+            background-color: var(--color-red);
+            border-color: var(--color-red);
+            color: white;
+            font-weight: 500;
+        }
+
         .table {
             --bs-table-bg: transparent;
             --bs-table-border-color: var(--border-color);
@@ -397,6 +404,10 @@
             color: var(--text-muted);
             border: none;
             transition: color 0.2s ease-in-out;
+        }
+
+        .action-buttons .btn-view:hover {
+            color: var(--color-blue);
         }
 
         .action-buttons .btn-edit:hover {
@@ -441,6 +452,42 @@
             border-color: var(--border-color);
             color: var(--color-gray);
         }
+
+        /* Página de Visualização e Exclusão */
+        .view-details-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .view-details-list li {
+            display: flex;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .view-details-list li:last-child {
+            border-bottom: none;
+        }
+
+        .view-details-list .detail-label {
+            color: var(--text-muted);
+            font-weight: 500;
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        .view-details-list .detail-value {
+            color: var(--text-light);
+        }
+
+        .content-wrapper-card.border-danger {
+            border-color: var(--color-red) !important;
+        }
+
+        .text-danger {
+            color: var(--color-red) !important;
+        }
+
 
         /* Outros */
         .status-badge {
@@ -666,7 +713,9 @@
                                 <tr>
                                     <th scope="col">ID</th>
                                     <th scope="col">Nome</th>
-                                    <th scope="col">Descrição</th>
+                                    <th scope="col">CNPJ</th>
+                                    <th scope="col">Telefone</th>
+                                    <th scope="col">Email</th>
                                     <th scope="col">Ações</th>
                                 </tr>
                             </thead>
@@ -674,46 +723,101 @@
                                 <tr>
                                     <th scope="row">1</th>
                                     <td>Logitech do Brasil LTDA</td>
-                                    <td>Melhores periféricos</td>
-                                    <td class="action-buttons"><button class="btn btn-sm btn-edit"><i
+                                    <td>12.345.678/0001-99</td>
+                                    <td>(11) 98765-4321</td>
+                                    <td>contato@logitech.com.br</td>
+                                    <td class="action-buttons"><button class="btn btn-sm btn-view-fornecedor"
+                                            title="Visualizar"><i class="bi bi-eye"></i></button><button
+                                            class="btn btn-sm btn-edit" title="Editar"><i
                                                 class="bi bi-pencil-square"></i></button><button
-                                            class="btn btn-sm btn-delete"><i class="bi bi-trash"></i></button></td>
+                                            class="btn btn-sm btn-delete-fornecedor" title="Excluir"><i
+                                                class="bi bi-trash"></i></button></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">2</th>
                                     <td>Fornecedor Alpha</td>
-                                    <td>Distribuidor de componentes eletrônicos.</td>
-                                    <td class="action-buttons"><button class="btn btn-sm btn-edit"><i
+                                    <td>98.765.432/0001-11</td>
+                                    <td>(21) 12345-6789</td>
+                                    <td>alpha@suprimentos.com</td>
+                                    <td class="action-buttons"><button class="btn btn-sm btn-view-fornecedor"
+                                            title="Visualizar"><i class="bi bi-eye"></i></button><button
+                                            class="btn btn-sm btn-edit" title="Editar"><i
                                                 class="bi bi-pencil-square"></i></button><button
-                                            class="btn btn-sm btn-delete"><i class="bi bi-trash"></i></button></td>
+                                            class="btn btn-sm btn-delete-fornecedor" title="Excluir"><i
+                                                class="bi bi-trash"></i></button></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <!-- Exemplo de Paginação -->
                     <nav class="mt-4" aria-label="Navegação de página">
                         <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Primeira</a>
-                            </li>
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-                            </li>
+                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"
+                                    aria-disabled="true">Primeira</a></li>
+                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"
+                                    aria-disabled="true">Anterior</a></li>
                             <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active" aria-current="page">
-                                <a class="page-link" href="#">2</a>
-                            </li>
+                            <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
                             <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Próxima</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Última</a>
-                            </li>
+                            <li class="page-item"><a class="page-link" href="#">Próxima</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Última</a></li>
                         </ul>
                     </nav>
 
+                </div>
+            </div>
+
+            <!-- PÁGINA: VISUALIZAR FORNECEDOR -->
+            <div id="fornecedor-visualizar" class="page-content">
+                <div class="page-header">
+                    <h1>Detalhes do Fornecedor</h1>
+                    <p>Consulte as informações completas do fornecedor.</p>
+                </div>
+                <div class="content-wrapper-card">
+                    <ul class="view-details-list">
+                        <li><span class="detail-label">ID</span> <span class="detail-value">1</span></li>
+                        <li><span class="detail-label">Nome</span> <span class="detail-value">Logitech do Brasil
+                                LTDA</span></li>
+                        <li><span class="detail-label">CNPJ</span> <span class="detail-value">12.345.678/0001-99</span>
+                        </li>
+                        <li><span class="detail-label">Telefone</span> <span class="detail-value">(11) 98765-4321</span>
+                        </li>
+                        <li><span class="detail-label">Email</span> <span
+                                class="detail-value">contato@logitech.com.br</span></li>
+                        <li><span class="detail-label">Endereço</span> <span class="detail-value">Av. Paulista, 1000,
+                                Bela Vista, São Paulo - SP, 01310-100</span></li>
+                        <li><span class="detail-label">Descrição</span> <span class="detail-value">Melhores periféricos
+                                para computadores, com foco em produtos de alta performance para gamers e
+                                profissionais.</span></li>
+                    </ul>
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <button type="button" class="btn btn-secondary" id="btn-voltar-fornecedor">Voltar para a
+                            Lista</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA: EXCLUIR FORNECEDOR -->
+            <div id="fornecedor-excluir" class="page-content">
+                <div class="page-header">
+                    <h1>Confirmar Exclusão</h1>
+                    <p>Tem certeza de que deseja excluir este fornecedor?</p>
+                </div>
+                <div class="content-wrapper-card border-danger">
+                    <div class="text-center p-3">
+                        <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 3rem;"></i>
+                        <h4 class="mt-3">Atenção!</h4>
+                        <p>
+                            Esta ação é irreversível. Todos os dados associados a
+                            <strong>"Logitech do Brasil LTDA"</strong>
+                            serão permanentemente removidos do sistema.
+                        </p>
+                    </div>
+                    <div class="d-flex justify-content-center gap-2 mt-4">
+                        <button type="button" class="btn btn-secondary"
+                            id="btn-cancelar-exclusao-fornecedor">Cancelar</button>
+                        <button type="button" class="btn btn-danger">Confirmar Exclusão</button>
+                    </div>
                 </div>
             </div>
 
@@ -725,15 +829,37 @@
                 </div>
                 <div class="content-wrapper-card">
                     <form>
-                        <div class="mb-3">
-                            <label for="fornecedor-nome" class="form-label">Nome</label>
-                            <input type="text" class="form-control" id="fornecedor-nome"
-                                placeholder="Ex: Logitech do Brasil LTDA">
-                        </div>
-                        <div class="mb-3">
-                            <label for="fornecedor-descricao" class="form-label">Descrição</label>
-                            <textarea class="form-control" id="fornecedor-descricao" rows="3"
-                                placeholder="Ex: Distribuidor oficial de periféricos"></textarea>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="fornecedor-nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="fornecedor-nome"
+                                    placeholder="Ex: Logitech do Brasil LTDA">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fornecedor-cnpj" class="form-label">CNPJ</label>
+                                <input type="text" class="form-control" id="fornecedor-cnpj"
+                                    placeholder="00.000.000/0000-00">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fornecedor-telefone" class="form-label">Telefone</label>
+                                <input type="text" class="form-control" id="fornecedor-telefone"
+                                    placeholder="(00) 00000-0000">
+                            </div>
+                            <div class="col-12">
+                                <label for="fornecedor-email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="fornecedor-email"
+                                    placeholder="contato@empresa.com">
+                            </div>
+                            <div class="col-12">
+                                <label for="fornecedor-endereco" class="form-label">Endereço</label>
+                                <input type="text" class="form-control" id="fornecedor-endereco"
+                                    placeholder="Rua, Número, Bairro, Cidade - Estado, CEP">
+                            </div>
+                            <div class="col-12">
+                                <label for="fornecedor-descricao" class="form-label">Descrição</label>
+                                <textarea class="form-control" id="fornecedor-descricao" rows="3"
+                                    placeholder="Ex: Distribuidor oficial de periféricos"></textarea>
+                            </div>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
                             <button type="button" class="btn btn-secondary" id="btn-cancelar-fornecedor">Cancelar e
@@ -1248,7 +1374,8 @@
                 pageContents.forEach(page => page.classList.remove('active'));
                 targetPage.classList.add('active');
 
-                const targetLink = document.querySelector(`.sidebar .nav-link[href="#${pageId}"]`);
+                // Atualiza o link ativo na sidebar, exceto para páginas de formulário/visualização
+                const targetLink = document.querySelector(`.sidebar .nav-link[href="#${pageId.split('-')[0]}"]`);
                 navLinks.forEach(link => link.classList.remove('active'));
                 if (targetLink) {
                     targetLink.classList.add('active');
@@ -1259,12 +1386,7 @@
             navLinks.forEach(link => {
                 link.addEventListener('click', function (e) {
                     e.preventDefault();
-                    // Ignora a lógica de navegação SPA para o botão de sair
-                    if (this.id === 'logout-button') {
-                        // Aqui você adicionaria a lógica real de logout, ex: window.location.href = '/login.html';
-                        console.log("Botão de sair clicado!");
-                        return;
-                    }
+                    if (this.id === 'logout-button' || this.id === 'theme-toggle') return;
                     const targetId = this.getAttribute('href').substring(1);
                     showPage(targetId);
                 });
@@ -1284,6 +1406,19 @@
             setupCrudNavigation('categorias', 'categoria-cadastro', 'btn-nova-categoria', 'btn-cancelar-categoria');
             setupCrudNavigation('entradas', 'entrada-cadastro', 'btn-nova-entrada', 'btn-cancelar-entrada');
             setupCrudNavigation('saidas', 'saida-cadastro', 'btn-nova-saida', 'btn-cancelar-saida');
+
+            // Lógica para visualização de Fornecedor
+            document.querySelectorAll('.btn-view-fornecedor').forEach(button => {
+                button.addEventListener('click', () => showPage('fornecedor-visualizar'));
+            });
+            document.getElementById('btn-voltar-fornecedor').addEventListener('click', () => showPage('fornecedores'));
+
+            // Lógica para exclusão de Fornecedor
+            document.querySelectorAll('.btn-delete-fornecedor').forEach(button => {
+                button.addEventListener('click', () => showPage('fornecedor-excluir'));
+            });
+            document.getElementById('btn-cancelar-exclusao-fornecedor').addEventListener('click', () => showPage('fornecedores'));
+
 
             // Lógica dos Gráficos do Dashboard
             function initDashboardCharts() {
@@ -1377,6 +1512,13 @@
                 const newTheme = currentTheme === 'light' ? 'dark' : 'light';
                 localStorage.setItem('theme', newTheme);
                 applyTheme(newTheme);
+            });
+
+            document.getElementById('logout-button').addEventListener('click', (e) => {
+                e.preventDefault();
+                // Adicione sua lógica de logout aqui
+                console.log("Botão de sair clicado!");
+                // Ex: window.location.href = '/login';
             });
 
             // Aplica o tema salvo ao carregar a página

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}
+SGE - Fornecedores
+{% endblock %}
+
+{% block content %}
+
+    <div id="fornecedores">
+        <div class="page-header">
+            <h1>Fornecedores</h1>
+            <p>Gerencie os fornecedores do seu negócio.</p>
+        </div>
+
+        <div class="content-wrapper-card">
+            <div class="row">
+                <div class="col-md-8">
+                    <form method="get" action="{% url 'supplier_list' %}">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="name" value="{{ request.GET.name }}" placeholder="Buscar por nome...">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-4 text-md-end mt-2 mt-md-0">
+                    <a href="{% url 'supplier_create' %}"class="btn btn-success" id="btn-novo-fornecedor">
+                        <i class="bi bi-plus-lg"></i> Novo Fornecedor</a>
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">CNPJ</th>
+                            <th scope="col">Telefone</th>
+                            <th scope="col">Email</th>
+                            <!-- <th scope="col">Descrições</th> -->
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for supplier in suppliers %}
+                        <tr>
+                            <td scope="row">{{ supplier.id }}</td>
+                            <td><strong>{{ supplier.name }}</strong></td>
+                            <td>{{ supplier.cnpj }}</td>
+                            <td>{{ supplier.phone }}</td>
+                            <td>{{ supplier.email }}</td>
+                            <td class="action-buttons">
+                                <a href="{% url 'supplier_detail' supplier.id %}" class="btn btn-sm btn-detail">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="{% url 'supplier_update' supplier.id %}" class="btn btn-sm btn-edit">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="{% url 'supplier_delete' supplier.id %}" class="btn btn-sm btn-delete">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% include 'components/_pagination.html' %}
+        </div>
+    </div>
+
+{% endblock %}

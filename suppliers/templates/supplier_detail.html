@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+SGE - Detalhes do Fornecedor
+{% endblock %}
+
+{% block content %}
+    <div id="categoria-cadastro">
+        <div class="page-header">
+            <h1>Detalhes do Fornecedor - {{ supplier.name }}</h1>
+            <p>Abaixo está os detalhes refernte ao Fornecedor {{ supplier.name }}.</p>
+        </div >
+        <ul class="view-details-list">
+            <li><span class="detail-label">ID</span> <span class="detail-value">{{ supplier.id }}</span></li>
+            <li><span class="detail-label">Nome</span> <span class="detail-value">{{ supplier.name }}</span></li>
+            <li><span class="detail-label">CNPJ</span> <span class="detail-value">{{ supplier.cnpj }}</span>
+            </li>
+            <li><span class="detail-label">Telefone</span> <span class="detail-value">{{ supplier.phone }}</span>
+            </li>
+            <li><span class="detail-label">Email</span> <span
+                    class="detail-value">{{ supplier.email }}</span></li>
+            <li><span class="detail-label">Endereço</span> <span class="detail-value">{{ supplier.address }}</span></li>
+            <li><span class="detail-label">Descrição</span> <span class="detail-value">{{ supplier.description }}</span></li>
+        </ul>
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <a href="{% url 'supplier_list' %}" class="btn btn-secondary" id="btn-cancelar-categoria">Cancelar e Voltar para a Lista de Fornecedores </a>
+        </div>
+    </div>
+{% endblock %}
