@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}
+SGE - Entradas de Estoque
+{% endblock %}
+
+{% block content %}
+
+    <div id="inflows">
+        <div class="page-header">
+            <h1>Entradas de Estoque</h1>
+            <p>Histórico de todas as entradas de produtos.</p>
+        </div>
+
+        <div class="content-wrapper-card">
+            <div class="row">
+                <div class="col-md-8">
+                    <form method="get" action="{% url 'inflow_list' %}">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="q" value="{{ request.GET.q }}" placeholder="Buscar por Produto, Fornecedor, NF...">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-4 text-md-end mt-2 mt-md-0">
+                    <a href="{% url 'inflow_create' %}"class="btn btn-success" id="btn-nova-entrada">
+                        <i class="bi bi-plus-lg"></i> Nova Entrada</a>
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Produto</th>
+                            <th scope="col">Qtd.</th>
+                            <th scope="col">Fornecedor</th>
+                            <th scope="col">Nota Fiscal</th>
+                            <th scope="col">Usuário</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inflow in object_list %}
+                        <tr>
+                            <td><strong>{{ inflow.product.title }}</strong></td>
+                            <td>{{ inflow.quantity }}</td>
+                            <td>{{ inflow.supplier.name }}</td>
+                            <td>{{ inflow.invoice_number|default:"-" }}</td>
+                            <td>{{ inflow.user.username|default:"-" }}</td>
+                            <td>{{ inflow.created_at|date:"d/m/Y H:i" }}</td>
+                            
+                            <td class="action-buttons">
+                                <a href="{% url 'inflow_detail' inflow.id %}" class="btn btn-sm btn-detail">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center">Nenhuma entrada registrada ainda.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            {% include 'components/_pagination.html' %}
+        </div>
+    </div>
+
+{% endblock %}

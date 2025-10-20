@@ -1187,6 +1187,8 @@
                                     <th scope="col">Produto</th>
                                     <th scope="col">Fornecedor</th>
                                     <th scope="col">Qtd.</th>
+                                    <th scope="col">Nota Fiscal</th>
+                                    <th scope="col">Usuário</th>
                                     <th scope="col">Data</th>
                                     <th scope="col">Ações</th>
                                 </tr>
@@ -1197,12 +1199,70 @@
                                     <td>Mouse Gamer XYZ</td>
                                     <td>Fornecedor Alpha</td>
                                     <td>10</td>
+                                    <td>NF-12345</td>
+                                    <td>Erik Nathan</td>
                                     <td>10/08/2025</td>
-                                    <td class="action-buttons"><button class="btn btn-sm"><i
-                                                class="bi bi-eye"></i></button></td>
+                                    <td class="action-buttons">
+                                        <button class="btn btn-sm btn-view-entrada" title="Visualizar"><i
+                                                class="bi bi-eye"></i></button>
+                                        <button class="btn btn-sm btn-delete-entrada" title="Excluir"><i
+                                                class="bi bi-trash"></i></button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA: VISUALIZAR ENTRADA -->
+            <div id="entrada-visualizar" class="page-content">
+                <div class="page-header">
+                    <h1>Detalhes da Entrada</h1>
+                    <p>Consulte as informações completas da entrada.</p>
+                </div>
+                <div class="content-wrapper-card">
+                    <ul class="view-details-list">
+                        <li><span class="detail-label">ID</span> <span class="detail-value">1</span></li>
+                        <li><span class="detail-label">Produto</span> <span class="detail-value">Mouse Gamer XYZ</span>
+                        </li>
+                        <li><span class="detail-label">Fornecedor</span> <span class="detail-value">Fornecedor
+                                Alpha</span></li>
+                        <li><span class="detail-label">Quantidade</span> <span class="detail-value">10</span></li>
+                        <li><span class="detail-label">Nota Fiscal</span> <span class="detail-value">NF-12345</span>
+                        </li>
+                        <li><span class="detail-label">Usuário</span> <span class="detail-value">Erik Nathan</span></li>
+                        <li><span class="detail-label">Descrição</span> <span class="detail-value">Entrada referente ao
+                                pedido #554.</span></li>
+                        <li><span class="detail-label">Data</span> <span class="detail-value">10 de Agosto de
+                                2025</span></li>
+                    </ul>
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <button type="button" class="btn btn-secondary" id="btn-voltar-entrada">Voltar para a
+                            Lista</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA: EXCLUIR ENTRADA -->
+            <div id="entrada-excluir" class="page-content">
+                <div class="page-header">
+                    <h1>Confirmar Exclusão</h1>
+                    <p>Tem certeza de que deseja excluir esta entrada?</p>
+                </div>
+                <div class="content-wrapper-card border-danger">
+                    <div class="text-center p-3">
+                        <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 3rem;"></i>
+                        <h4 class="mt-3">Atenção!</h4>
+                        <p>
+                            Esta ação é irreversível e irá reverter a adição de <strong>10 unidades</strong> do produto
+                            <strong>"Mouse Gamer XYZ"</strong> ao estoque.
+                        </p>
+                    </div>
+                    <div class="d-flex justify-content-center gap-2 mt-4">
+                        <button type="button" class="btn btn-secondary"
+                            id="btn-cancelar-exclusao-entrada">Cancelar</button>
+                        <button type="button" class="btn btn-danger">Confirmar Exclusão</button>
                     </div>
                 </div>
             </div>
@@ -1230,13 +1290,21 @@
                                 <option>Mouse MX Master</option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="entrada-quantidade" class="form-label">Quantidade</label>
-                            <input type="number" class="form-control" id="entrada-quantidade" value="1">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="entrada-quantidade" class="form-label">Quantidade</label>
+                                <input type="number" class="form-control" id="entrada-quantidade" value="1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="entrada-nf" class="form-label">Nota Fiscal</label>
+                                <input type="text" class="form-control" id="entrada-nf"
+                                    placeholder="Ex: 987654 (Opcional)">
+                            </div>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 mt-3">
                             <label for="entrada-descricao" class="form-label">Descrição</label>
-                            <textarea class="form-control" id="entrada-descricao" rows="3"></textarea>
+                            <textarea class="form-control" id="entrada-descricao" rows="3"
+                                placeholder="Informações adicionais (Opcional)"></textarea>
                         </div>
                         <div class="d-flex flex-column flex-sm-row-reverse gap-2 mt-4">
                             <button type="button" class="btn btn-secondary" id="btn-cancelar-entrada">Cancelar e Voltar
@@ -1393,31 +1461,38 @@
             });
 
             // Lógica para navegação entre páginas de CRUD
-            function setupCrudNavigation(listPageId, formPageId, newButtonId, cancelButtonId) {
-                const newButton = document.getElementById(newButtonId);
-                const cancelButton = document.getElementById(cancelButtonId);
+            function setupCrudNavigation(options) {
+                const { listPageId, formPageId, viewPageId, deletePageId, newBtnId, cancelBtnId, viewBtnClass, backBtnId, deleteBtnClass, cancelDeleteBtnId } = options;
+
+                const newButton = document.getElementById(newBtnId);
                 if (newButton) newButton.addEventListener('click', () => showPage(formPageId));
+
+                const cancelButton = document.getElementById(cancelBtnId);
                 if (cancelButton) cancelButton.addEventListener('click', () => showPage(listPageId));
+
+                if (viewPageId && viewBtnClass) {
+                    document.querySelectorAll(`.${viewBtnClass}`).forEach(button => {
+                        button.addEventListener('click', () => showPage(viewPageId));
+                    });
+                    const backButton = document.getElementById(backBtnId);
+                    if (backButton) backButton.addEventListener('click', () => showPage(listPageId));
+                }
+
+                if (deletePageId && deleteBtnClass) {
+                    document.querySelectorAll(`.${deleteBtnClass}`).forEach(button => {
+                        button.addEventListener('click', () => showPage(deletePageId));
+                    });
+                    const cancelDeleteButton = document.getElementById(cancelDeleteBtnId);
+                    if (cancelDeleteButton) cancelDeleteButton.addEventListener('click', () => showPage(listPageId));
+                }
             }
 
-            setupCrudNavigation('fornecedores', 'fornecedor-cadastro', 'btn-novo-fornecedor', 'btn-cancelar-fornecedor');
-            setupCrudNavigation('produtos', 'produto-cadastro', 'btn-novo-produto', 'btn-cancelar-produto');
-            setupCrudNavigation('marcas', 'marca-cadastro', 'btn-nova-marca', 'btn-cancelar-marca');
-            setupCrudNavigation('categorias', 'categoria-cadastro', 'btn-nova-categoria', 'btn-cancelar-categoria');
-            setupCrudNavigation('entradas', 'entrada-cadastro', 'btn-nova-entrada', 'btn-cancelar-entrada');
-            setupCrudNavigation('saidas', 'saida-cadastro', 'btn-nova-saida', 'btn-cancelar-saida');
-
-            // Lógica para visualização de Fornecedor
-            document.querySelectorAll('.btn-view-fornecedor').forEach(button => {
-                button.addEventListener('click', () => showPage('fornecedor-visualizar'));
-            });
-            document.getElementById('btn-voltar-fornecedor').addEventListener('click', () => showPage('fornecedores'));
-
-            // Lógica para exclusão de Fornecedor
-            document.querySelectorAll('.btn-delete-fornecedor').forEach(button => {
-                button.addEventListener('click', () => showPage('fornecedor-excluir'));
-            });
-            document.getElementById('btn-cancelar-exclusao-fornecedor').addEventListener('click', () => showPage('fornecedores'));
+            setupCrudNavigation({ listPageId: 'fornecedores', formPageId: 'fornecedor-cadastro', newBtnId: 'btn-novo-fornecedor', cancelBtnId: 'btn-cancelar-fornecedor', viewPageId: 'fornecedor-visualizar', viewBtnClass: 'btn-view-fornecedor', backBtnId: 'btn-voltar-fornecedor', deletePageId: 'fornecedor-excluir', deleteBtnClass: 'btn-delete-fornecedor', cancelDeleteBtnId: 'btn-cancelar-exclusao-fornecedor' });
+            setupCrudNavigation({ listPageId: 'entradas', formPageId: 'entrada-cadastro', newBtnId: 'btn-nova-entrada', cancelBtnId: 'btn-cancelar-entrada', viewPageId: 'entrada-visualizar', viewBtnClass: 'btn-view-entrada', backBtnId: 'btn-voltar-entrada', deletePageId: 'entrada-excluir', deleteBtnClass: 'btn-delete-entrada', cancelDeleteBtnId: 'btn-cancelar-exclusao-entrada' });
+            setupCrudNavigation({ listPageId: 'produtos', formPageId: 'produto-cadastro', newBtnId: 'btn-novo-produto', cancelBtnId: 'btn-cancelar-produto' });
+            setupCrudNavigation({ listPageId: 'marcas', formPageId: 'marca-cadastro', newBtnId: 'btn-nova-marca', cancelBtnId: 'btn-cancelar-marca' });
+            setupCrudNavigation({ listPageId: 'categorias', formPageId: 'categoria-cadastro', newBtnId: 'btn-nova-categoria', cancelBtnId: 'btn-cancelar-categoria' });
+            setupCrudNavigation({ listPageId: 'saidas', formPageId: 'saida-cadastro', newBtnId: 'btn-nova-saida', cancelBtnId: 'btn-cancelar-saida' });
 
 
             // Lógica dos Gráficos do Dashboard
