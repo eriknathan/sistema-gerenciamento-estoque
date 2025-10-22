@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}
+SGE - Detalhes da Saída
+{% endblock %}
+
+{% block content %}
+    <div id="outflow-detail">
+        <div class="page-header">
+            <h1>Detalhes da Saída #{{ object.id }} - {{ object.product.title }}</h1>
+            <p>Abaixo estão os detalhes referentes à saída do estoque.</p>
+        </div >
+        
+        <ul class="view-details-list">
+            <li>
+                <span class="detail-label">ID da Saída</span> 
+                <span class="detail-value">{{ object.id }}</span>
+            </li>
+
+            <li>
+                <span class="detail-label">Produto</span> 
+                <span class="detail-value">{{ object.product.title }}</span>
+            </li>
+            
+            <li>
+                <span class="detail-label">Tipo de Saída</span> 
+                <span class="detail-value">{{ object.get_outflow_type_display|default:"-" }}</span>
+            </li>
+
+            <li>
+                <span class="detail-label">Quantidade</span> 
+                <span class="detail-value">{{ object.quantity }}</span>
+            </li>
+            <li>
+                <span class="detail-label">Nota Fiscal</span> 
+                <span class="detail-value">{{ object.invoice_number|default:"-" }}</span>
+            </li>
+             <li>
+                <span class="detail-label">Registrado por</span> 
+                <span class="detail-value">{{ object.user.username|default:"(Usuário removido)" }}</span>
+            </li>
+            <li>
+                <span class="detail-label">Descrição</span> 
+                <span class="detail-value">{{ object.description|default:"-" }}</span>
+            </li>
+            <li>
+                <span class="detail-label">Data da Saída</span> 
+                <span class="detail-value">{{ object.created_at|date:"d/m/Y H:i" }}</span>
+            </li>
+             <li>
+                <span class="detail-label">Última Atualização</span> 
+                <span class="detail-value">{{ object.updated_at|date:"d/m/Y H:i" }}</span>
+            </li>
+        </ul>
+        
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <a href="{% url 'outflows_list' %}" class="btn btn-secondary" id="btn-voltar-detalhe">Voltar para a Lista de Saídas</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}
+SGE - Saídas de Estoque
+{% endblock %}
+
+{% block content %}
+
+    <div id="outflows">
+        <div class="page-header">
+            <h1>Saídas de Estoque</h1>
+            <p>Histórico de todas as saídas de produtos.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-3 col-md-6">
+                <div class="metric-card-simple bg-blue">
+                    <div class="card-title">Quantidade de Vendas</div>
+                    <div class="card-value">1</div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="metric-card-simple bg-red">
+                    <div class="card-title">Produtos Vendidos</div>
+                    <div class="card-value">2</div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="metric-card-simple bg-green">
+                    <div class="card-title">Valor das Vendas</div>
+                    <div class="card-value">R$ 480,00</div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="metric-card-simple bg-yellow">
+                    <div class="card-title">Lucro das Vendas</div>
+                    <div class="card-value">R$ 302,00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-wrapper-card">
+            <div class="row">
+                <div class="col-md-8">
+                    <form method="get" action="{% url 'outflows_list' %}">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="q" value="{{ request.GET.q }}" placeholder="Buscar por Produto, Tipo, NF...">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-4 text-md-end mt-2 mt-md-0">
+                    <a href="{% url 'outflows_create' %}"class="btn btn-success" id="btn-nova-saida">
+                        <i class="bi bi-plus-lg"></i> Nova Saída</a>
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Produto</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Qtd.</th>
+                            <th scope="col">Nota Fiscal</th>
+                            <th scope="col">Usuário</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for outflow in object_list %}
+                        <tr>
+                            <td>{{ outflow.id }}</td>
+                            <td><strong>{{ outflow.product.title }}</strong></td>
+                            
+                            <td>{{ outflow.get_outflow_type_display|default:outflow.outflow_type|default:"-" }}</td>
+                            
+                            <td>{{ outflow.quantity }}</td>
+                            <td>{{ outflow.invoice_number|default:"-" }}</td>
+                            <td>{{ outflow.user.username|default:"-" }}</td>
+                            <td>{{ outflow.created_at|date:"d/m/Y H:i" }}</td>
+                            
+                            <td class="action-buttons">
+                                <a href="{% url 'outflows_detail' outflow.id %}" class="btn btn-sm btn-detail">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center">Nenhuma saída registrada ainda.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            {% include 'components/_pagination.html' %}
+        </div>
+    </div>
+
+{% endblock %}

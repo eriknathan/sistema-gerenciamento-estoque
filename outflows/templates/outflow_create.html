@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}
+SGE - Cadastrar Nova Saída
+{% endblock %}
+
+{% block content %}
+    <div id="outflow-cadastro">
+        <div class="page-header">
+            <h1>Cadastrar Nova Saída</h1>
+            <p>Preencha os dados para registrar uma nova saída de produto do estoque.</p>
+        </div>
+        <div class="content-wrapper-card">
+            <form method="post" class="form">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="{{ form.product.id_for_label }}" class="form-label">{{ form.product.label }}</label>
+                    {{ form.product }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.tipo.id_for_label }}" class="form-label">{{ form.outflow_type.label }}</label>
+                    {{ form.outflow_type }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.quantity.id_for_label }}" class="form-label">{{ form.quantity.label }}</label>
+                    {{ form.quantity }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.invoice_number.id_for_label }}" class="form-label">{{ form.invoice_number.label }}</label>
+                    {{ form.invoice_number }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.description.id_for_label }}" class="form-label">{{ form.description.label }}</label>
+                    {{ form.description }}
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a href="{% url 'outflows_list' %}" class="btn btn-secondary" id="btn-cancelar-saida">Cancelar e Voltar para lista de Saída </a>
+                    <button type="submit" class="btn btn-primary">Registar Saída</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

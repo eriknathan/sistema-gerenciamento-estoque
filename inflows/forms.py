@@ -6,6 +6,7 @@ class InflowForm(forms.ModelForm):
 
     class Meta:
         model = models.Inflow
+
         fields = [
             'product',
             'supplier',
