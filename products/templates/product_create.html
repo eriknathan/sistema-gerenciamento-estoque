@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}
+SGE - Cadastrar Novo Produto
+{% endblock %}
+
+{% block content %}
+    <div id="produto-cadastro">
+        <div class="page-header">
+            <h1>Cadastrar Produto</h1>
+            <p>Preencha os dados para adicionar um novo produto.</p>
+        </div>
+        <div class="content-wrapper-card">
+            
+            <form method="post" class="form">
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <label for="{{ form.title.id_for_label }}" class="form-label">{{ form.title.label }}</label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.title.errors.as_text }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.category.id_for_label }}" class="form-label">{{ form.category.label }}</label>
+                        {{ form.category }}
+                        {% if form.category.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.category.errors.as_text }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.brand.id_for_label }}" class="form-label">{{ form.brand.label }}</label>
+                        {{ form.brand }}
+                        {% if form.brand.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.brand.errors.as_text }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.description.id_for_label }}" class="form-label">{{ form.description.label }}</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.description.errors.as_text }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.serie_number.id_for_label }}" class="form-label">{{ form.serie_number.label }}</label>
+                    {{ form.serie_number }}
+                    {% if form.serie_number.help_text %}
+                        <small class="form-text text-muted">{{ form.serie_number.help_text }}</small>
+                    {% endif %}
+                    {% if form.serie_number.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.serie_number.errors.as_text }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.quantity.id_for_label }}" class="form-label">{{ form.quantity.label }}</label>
+                    {{ form.quantity }}
+                    {% if form.quantity.help_text %}
+                        <small class="form-text text-muted">{{ form.quantity.help_text }}</small>
+                    {% endif %}
+                    {% if form.quantity.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.quantity.errors.as_text }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.cost_price.id_for_label }}" class="form-label">{{ form.cost_price.label }}</label>
+                        {{ form.cost_price }}
+                        {% if form.cost_price.help_text %}
+                            <small class="form-text text-muted">{{ form.cost_price.help_text }}</small>
+                        {% endif %}
+                        {% if form.cost_price.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.cost_price.errors.as_text }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.selling_price.id_for_label }}" class="form-label">{{ form.selling_price.label }}</label>
+                        {{ form.selling_price }}
+                        {% if form.selling_price.help_text %}
+                            <small class="form-text text-muted">{{ form.selling_price.help_text }}</small>
+                        {% endif %}
+                         {% if form.selling_price.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.selling_price.errors.as_text }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column flex-sm-row-reverse gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary">Salvar Produto</button>
+                    <a href="{% url 'product_list' %}" class="btn btn-secondary" id="btn-cancelar-produto">
+                        Cancelar e Voltar para lista de Produtos
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

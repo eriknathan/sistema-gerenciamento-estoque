@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}
+SGE - Detalhes do Produto
+{% endblock %}
+
+{% block content %}
+    <div id="product-detail">
+        <div class="page-header">
+            <h1>Detalhes do Produto - {{ object.title }}</h1>
+            <p>Abaixo estão os detalhes referentes ao produto {{ object.title }}.</p>
+        </div >
+        
+        <ul class="view-details-list">
+            <li>
+                <span class="detail-label">ID</span> 
+                <span class="detail-value">{{ object.id }}</span>
+            </li>
+            <li>
+                <span class="detail-label">Título</span> 
+                <span class="detail-value">{{ object.title }}</span>
+            </li>
+            <li>
+                <span class="detail-label">Categoria</span> 
+                <span class="detail-value">{{ object.category.name|default:"-" }}</span>
+            </li>
+            <li>
+                <span class="detail-label">Marca</span> 
+                <span class="detail-value">{{ object.brand.name|default:"-" }}</span>
+            </li>
+            <li>
+                <span class="detail-label">Descrição</span> 
+                <span class="detail-value">{{ object.description|default:"-" }}</span>
+            </li>
+            <li>
+                <span class="detail-label">Quantidade</span> 
+                <span class="detail-value">{{ object.quantity|default:"-" }}</span>
+            </li>
+            <li>
+                <span class="detail-label">Nº de Série / SKU</span> 
+                <span class="detail-value">{{ object.serie_number|default:"-" }}</span>
+            </li>
+            <li>
+                <span class="detail-label">Preço de Custo</span> 
+                <span class="detail-value">R$ {{ object.cost_price|floatformat:2 }}</span>
+            </li>
+            <li>
+                <span class="detail-label">Preço de Venda</span> 
+                <span class="detail-value">R$ {{ object.selling_price|floatformat:2 }}</span>
+            </li>
+        </ul>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <a href="{% url 'product_list' %}" class="btn btn-secondary" id="btn-voltar-lista">Voltar para a Lista de Produtos</a>
+        </div>
+    </div>
+{% endblock %}

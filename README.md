@@ -18,33 +18,45 @@ erDiagram
     }
 
     Supplier {
-        string name PK
+        int id PK
+        string name
         string description
         string phone
         string email
         string address
         string cnpj UK
+        datetime created_at
+        datetime updated_at
     }
 
     Category {
-        string name PK
+        int id PK
+        string name
         string description
         bool is_active
+        datetime created_at
+        datetime created_at
     }
 
     Brand {
-        string name PK
+        int id PK
+        string name
         string description
         bool is_active
+        datetime created_at
+        datetime updated_at
     }
 
     Product {
-        string title PK
+        int id PK
+        string title
         string description
         string serial_number
         decimal cost_price
         decimal sale_price
         int quantity
+        datetime created_at
+        datetime updated_at
     }
 
     Inflow {
@@ -59,13 +71,14 @@ erDiagram
         int id PK
         int quantity
         string description
-        string invoice_number
         string outflow_type
+        string invoice_number
         datetime created_at
+        datetime updated_at
     }
 
-    Product ||--o{ Category : "tem"
-    Product ||--o{ Brand : "tem"
+    Product ||--o{ Category : "pertence a"
+    Product ||--o{ Brand : "tem a marca"
     Inflow }o--|| Product : "registra entrada de"
     Inflow }o--|| Supplier : "é fornecida por"
     Inflow }o--|| User : "registrada por"
@@ -135,7 +148,9 @@ Representa um item no estoque. **Observação:** Este modelo foi inferido a part
 | `serial_number` | `CharField` | Número de série ou código único do produto. | Opcional, Único |
 | `cost_price` | `DecimalField` | Preço de custo do produto. | Obrigatório |
 | `sale_price` | `DecimalField` | Preço de venda do produto. | Obrigatório |
-| `quantity` | `IntegerField` | Quantidade atual em estoque. | Padrão: 0 |
+| `quantity` | `IntegerField` | Quantidade atual em estoque. | Padrão: `0` |
+| `created_at` | `DateTimeField` | Data e hora de criação do registro. | `auto_now_add=True` |
+| `updated_at` | `DateTimeField` | Data e hora da última atualização do registro. | `auto_now=True` |
 
 ### 5. Entrada (`Inflow`)
 
@@ -165,8 +180,8 @@ Registra a saída de um ou mais itens de um produto do estoque, seja por venda, 
 | `product` | `ForeignKey(Product)` | Produto que está saindo do estoque. | `on_delete=models.PROTECT` |
 | `quantity` | `IntegerField` | Quantidade de itens que saíram. | Obrigatório |
 | `description` | `TextField` | Descrição ou observações sobre a saída. | Opcional |
-| `invoice_number`| `CharField(50)` | Número da nota fiscal da venda (se aplicável). | Opcional |
 | `outflow_type` | `CharField(20)` | Tipo de saída: Venda, Perda/Dano, Ajuste. | Padrão: `SALE` |
+| `invoice_number`| `CharField(50)` | Número da nota fiscal da venda (se aplicável). | Opcional |
 | `user` | `ForeignKey(User)` | Usuário que registrou a saída. | `on_delete=models.SET_NULL` |
 | `created_at` | `DateTimeField` | Data em que a saída foi registrada. | Automático |
 | `updated_at` | `DateTimeField` | Data da última atualização. | Automático |
