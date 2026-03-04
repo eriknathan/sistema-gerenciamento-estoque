@@ -10,7 +10,7 @@ from brands.models import Brand
 
 class ProductListView(ListView):
     model = models.Product
-    template_name = 'product_list.html'
+    template_name = 'products/product_list.html'
     context_object_name = 'Products'
     paginate_by = 10
 
@@ -67,25 +67,25 @@ class ProductListView(ListView):
 
 class ProductCreateView(CreateView):
     model = models.Product
-    template_name = 'product_create.html'
+    template_name = 'products/product_create.html'
     form_class = forms.ProductForm
     success_url = reverse_lazy('product_list')
 
 
 class ProductDetailView(DetailView):
     model = models.Product
-    template_name = 'product_detail.html'
+    template_name = 'products/product_detail.html'
     context_object_name = 'Products'
 
 
 class ProductUpdateView(UpdateView):
     model = models.Product
-    template_name = 'product_update.html'
+    template_name = 'products/product_update.html'
     form_class = forms.ProductForm
     success_url = reverse_lazy('product_list')
 
 
 class ProductDeleteView(DeleteView):
     model = models.Product
-    template_name = 'product_delete.html'
+    template_name = 'products/product_delete.html'
     success_url = reverse_lazy('product_list')

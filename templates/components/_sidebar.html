@@ -1,0 +1,56 @@
+<!-- Barra Lateral -->
+<nav class="sidebar">
+    <!-- Header da sidebar -->
+    <div class="sidebar-header">
+        <div class="logo">SGE</div>
+        <div class="brand">
+            <span class="brand-name">SGE</span>
+            <span class="brand-sub">Gestão de Estoque</span>
+        </div>
+    </div>
+
+    <!-- Navegação -->
+    <div class="sidebar-nav">
+        <div class="nav-section-label">Cadastros</div>
+        <div class="nav flex-column">
+            <a class="nav-link" href="{% url 'product_list' %}" data-page="products">
+                <i class="bi bi-box-seam"></i>
+                <span>Produtos</span>
+            </a>
+            <a class="nav-link" href="{% url 'brand_list' %}" data-page="brands">
+                <i class="bi bi-bookmark-star"></i>
+                <span>Marcas</span>
+            </a>
+            <a class="nav-link" href="{% url 'category_list' %}" data-page="categories">
+                <i class="bi bi-tags"></i>
+                <span>Categorias</span>
+            </a>
+            <a class="nav-link" href="{% url 'supplier_list' %}" data-page="suppliers">
+                <i class="bi bi-truck"></i>
+                <span>Fornecedores</span>
+            </a>
+        </div>
+
+        <div class="nav-section-label">Movimentação</div>
+        <div class="nav flex-column">
+            <a class="nav-link" href="{% url 'inflow_list' %}" data-page="inflows">
+                <i class="bi bi-arrow-down-square"></i>
+                <span>Entradas</span>
+            </a>
+            <a class="nav-link" href="{% url 'outflows_list' %}" data-page="outflows">
+                <i class="bi bi-arrow-up-square"></i>
+                <span>Saídas</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer da sidebar -->
+    <div class="sidebar-footer">
+        <div class="nav flex-column">
+            <a class="nav-link" href="#" id="sidebar-theme-toggle" title="Mudar tema">
+                <i class="bi bi-moon-stars-fill"></i>
+                <span>Mudar Tema</span>
+            </a>
+        </div>
+    </div>
+</nav>

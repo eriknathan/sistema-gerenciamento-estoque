@@ -1,15 +1,14 @@
 from django.views.generic import ListView, CreateView, DetailView
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 
 from . import models
 from . import forms
 
 
-class OutflowListView(LoginRequiredMixin, ListView):
+class OutflowListView(ListView):
     model = models.Outflow
-    template_name = 'outflow_list.html'
+    template_name = 'outflows/outflow_list.html'
     context_object_name = 'outflows'
     paginate_by = 10
 
@@ -23,22 +22,42 @@ class OutflowListView(LoginRequiredMixin, ListView):
             )
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        from django.db.models import Sum, F
+        outflows = models.Outflow.objects.all()
+        
+        context['outflows_count'] = outflows.count()
+        context['quantity_sold'] = outflows.aggregate(
+            total=Sum('quantity')
+        )['total'] or 0
 
-class OutflowCreateView(LoginRequiredMixin, CreateView):
+        # Calcular valor total das vendas e lucro
+        # Somente saídas do tipo SALE devem contar para valor e lucro
+        sales = outflows.filter(outflow_type=models.Outflow.OutflowType.SALE)
+        
+        context['total_sales'] = sales.aggregate(
+            total_value=Sum(F('quantity') * F('product__selling_price'))
+        )['total_value'] or 0
+
+        total_cost = sales.aggregate(
+            total_cost=Sum(F('quantity') * F('product__cost_price'))
+        )['total_cost'] or 0
+
+        context['total_profit'] = context['total_sales'] - total_cost
+
+        return context
+
+
+
+class OutflowCreateView(CreateView):
     model = models.Outflow
-    template_name = 'outflow_create.html'
+    template_name = 'outflows/outflow_create.html'
     form_class = forms.OutflowForm
     success_url = reverse_lazy('outflows_list')
 
-    def form_valid(self, form):
-        """
-        Este método é chamado quando o formulário é validado com sucesso.
-        """
-        form.instance.user = self.request.user
-        return super().form_valid(form)
 
-
-class OutflowDetailView(LoginRequiredMixin, DetailView):
+class OutflowDetailView(DetailView):
     model = models.Outflow
-    template_name = 'outflow_detail.html'
+    template_name = 'outflows/outflow_detail.html'
     context_object_name = 'outflow'

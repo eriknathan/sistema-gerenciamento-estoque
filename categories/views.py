@@ -7,7 +7,7 @@ from . import forms
 
 class CategoryListView(ListView):
     model = models.Category
-    template_name = 'category_list.html'
+    template_name = 'categories/category_list.html'
     context_object_name = 'categorys'
     paginate_by = 10
 
@@ -23,25 +23,25 @@ class CategoryListView(ListView):
 
 class CategoryCreateView(CreateView):
     model = models.Category
-    template_name = 'category_create.html'
+    template_name = 'categories/category_create.html'
     form_class = forms.CategoryForm
     success_url = reverse_lazy('category_list')
 
 
 class CategoryDetailView(DetailView):
     model = models.Category
-    template_name = 'category_detail.html'
+    template_name = 'categories/category_detail.html'
     context_object_name = 'category'
 
 
 class CategoryUpdateView(UpdateView):
     model = models.Category
-    template_name = 'category_update.html'
+    template_name = 'categories/category_update.html'
     form_class = forms.CategoryForm
     success_url = reverse_lazy('category_list')
 
 
 class CategoryDeleteView(DeleteView):
     model = models.Category
-    template_name = 'category_delete.html'
+    template_name = 'categories/category_delete.html'
     success_url = reverse_lazy('category_list')

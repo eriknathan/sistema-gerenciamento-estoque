@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}
+SGE - Categorias
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1><i class="bi bi-tags me-2"></i>Categorias</h1>
+    <p>Gerencie as categorias dos seus produtos.</p>
+</div>
+
+<div class="content-wrapper-card">
+    <div class="row align-items-center">
+        <div class="col-md-7">
+            <form method="get" action="{% url 'category_list' %}">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="name" value="{{ request.GET.name }}"
+                        placeholder="Buscar por nome...">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="bi bi-search me-1"></i> Buscar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-5 text-md-end mt-2 mt-md-0">
+            <a href="{% url 'category_create' %}" class="btn btn-success" id="btn-nova-categoria">
+                <i class="bi bi-plus-lg me-1"></i> Nova Categoria
+            </a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categorys %}
+                <tr>
+                    <td>{{ category.id }}</td>
+                    <td><strong>{{ category.name }}</strong></td>
+                    <td>{{ category.description|truncatewords:8|default:"-" }}</td>
+                    <td>
+                        {% if category.is_active %}
+                        <span class="status-badge badge-active">
+                            <i class="bi bi-check-circle-fill"></i> Ativo
+                        </span>
+                        {% else %}
+                        <span class="status-badge badge-inactive">
+                            <i class="bi bi-x-circle-fill"></i> Inativo
+                        </span>
+                        {% endif %}
+                    </td>
+                    <td class="action-buttons">
+                        <a href="{% url 'category_detail' category.id %}" class="btn btn-sm btn-detail"
+                            title="Detalhes">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <a href="{% url 'category_update' category.id %}" class="btn btn-sm btn-edit" title="Editar">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'category_delete' category.id %}" class="btn btn-sm btn-delete" title="Excluir">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">
+                        <div class="empty-state">
+                            <i class="bi bi-tags d-block"></i>
+                            <p>Nenhuma categoria cadastrada ainda.</p>
+                            <a href="{% url 'category_create' %}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-plus-lg me-1"></i> Cadastrar Categoria
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include 'components/_pagination.html' %}
+</div>
+
+{% endblock %}
