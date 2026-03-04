@@ -11,6 +11,14 @@
 
     <!-- Navegação -->
     <div class="sidebar-nav">
+        <div class="nav-section-label">Gestão</div>
+        <div class="nav flex-column">
+            <a class="nav-link" href="{% url 'dashboard' %}" data-page="dashboard">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
+        </div>
+
         <div class="nav-section-label">Cadastros</div>
         <div class="nav flex-column">
             <a class="nav-link" href="{% url 'product_list' %}" data-page="products">

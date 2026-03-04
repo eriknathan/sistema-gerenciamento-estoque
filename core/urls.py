@@ -7,8 +7,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Redirect root to products list
-    path('', RedirectView.as_view(pattern_name='product_list', permanent=False)),
+    path('', RedirectView.as_view(pattern_name='dashboard', permanent=False)),
 
+    path('', include('dashboard.urls')),
     path('', include('brands.urls')),
     path('', include('categories.urls')),
     path('', include('suppliers.urls')),
