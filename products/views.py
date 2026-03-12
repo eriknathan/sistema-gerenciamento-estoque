@@ -2,9 +2,11 @@ from django.db.models import Sum, F, DecimalField
 from django.views.generic import ListView, CreateView, DetailView, \
     UpdateView, DeleteView
 from django.urls import reverse_lazy
+import csv
+from django.http import HttpResponse
 from . import models
 from . import forms
-from categories.models import Category 
+from categories.models import Category
 from brands.models import Brand
 
 
@@ -45,7 +47,7 @@ class ProductListView(ListView):
         context['brands'] = Brand.objects.all()
 
         # 2. Calcula e adiciona as Métricas
-        #    (Estou assumindo que você tem um campo 'stock_quantity' no seu model Product)
+        # Assumindo que você tem um campo 'quantity' no seu model Product
         metrics = queryset.aggregate(
             total_count=Sum('quantity'),
             total_cost=Sum(F('quantity') * F('cost_price'),
@@ -89,3 +91,51 @@ class ProductDeleteView(DeleteView):
     model = models.Product
     template_name = 'products/product_delete.html'
     success_url = reverse_lazy('product_list')
+
+
+def product_export_csv(request):
+    """
+    Export list of products to CSV format.
+    Applies the same filtering logic as ProductListView.
+    """
+    queryset = models.Product.objects.all()
+
+    title = request.GET.get('title')
+    serie_number = request.GET.get('serie_number')
+    category_id = request.GET.get('category_id')
+    brand_id = request.GET.get('brand_id')
+
+    if title:
+        queryset = queryset.filter(title__icontains=title)
+    if serie_number:
+        queryset = queryset.filter(serie_number__icontains=serie_number)
+    if category_id:
+        queryset = queryset.filter(category_id=category_id)
+    if brand_id:
+        queryset = queryset.filter(brand_id=brand_id)
+
+    response = HttpResponse(
+        content_type='text/csv; charset=utf-8',
+        headers={'Content-Disposition':
+                 'attachment; filename="produtos.csv"'}
+    )
+    # Add UTF-8 BOM so Excel opens it correctly directly
+    response.write('\ufeff'.encode('utf8'))
+
+    writer = csv.writer(response, delimiter=';')
+    writer.writerow(['ID', 'Título', 'Categoria', 'Marca', 'Preço Custo',
+                     'Preço Venda', 'Nº Série', 'Estoque'])
+
+    for product in queryset:
+        writer.writerow([
+            product.id,
+            product.title,
+            product.category.name if product.category else '',
+            product.brand.name if product.brand else '',
+            f"{product.cost_price:.2f}".replace('.', ','),
+            f"{product.selling_price:.2f}".replace('.', ','),
+            product.serie_number or '',
+            product.quantity
+        ])
+
+    return response

@@ -13,4 +13,6 @@ urlpatterns = [
           name='supplier_update'),
      path('suppliers/<int:pk>/delete/', views.SupplierDeleteView.as_view(),
           name='supplier_delete'),
+     path('suppliers/export/csv/', views.supplier_export_csv,
+          name='supplier_export_csv'),
 ]

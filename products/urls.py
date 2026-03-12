@@ -9,8 +9,10 @@ urlpatterns = [
           name='product_create'),
      path('products/<int:pk>/detail/', views.ProductDetailView.as_view(),
           name='product_detail'),
-     path('produpcts/<int:pk>/update/', views.ProductUpdateView.as_view(),
+     path('products/<int:pk>/update/', views.ProductUpdateView.as_view(),
           name='product_update'),
      path('products/<int:pk>/delete/', views.ProductDeleteView.as_view(),
           name='product_delete'),
+     path('products/export/csv/', views.product_export_csv,
+          name='product_export_csv'),
 ]

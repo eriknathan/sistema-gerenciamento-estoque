@@ -26,6 +26,9 @@ SGE - Entradas de Estoque
         </div>
 
         <div class="col-md-5 text-md-end mt-2 mt-md-0">
+            <a href="{% url 'inflow_export_csv' %}?{{ request.GET.urlencode }}" class="btn btn-outline-secondary me-2">
+                <i class="bi bi-file-earmark-spreadsheet me-1"></i> Exportar CSV
+            </a>
             <a href="{% url 'inflow_create' %}" class="btn btn-success" id="btn-nova-entrada">
                 <i class="bi bi-plus-lg me-1"></i> Nova Entrada
             </a>

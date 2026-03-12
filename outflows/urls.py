@@ -8,4 +8,6 @@ urlpatterns = [
          name='outflows_create'),
     path('outflows/<int:pk>/detail/', views.OutflowDetailView.as_view(),
          name='outflows_detail'),
+    path('outflows/export/csv/', views.outflow_export_csv,
+         name='outflows_export_csv'),
 ]

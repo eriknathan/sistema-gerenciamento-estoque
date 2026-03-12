@@ -13,4 +13,6 @@ urlpatterns = [
           name='category_update'),
      path('categories/<int:pk>/delete/', views.CategoryDeleteView.as_view(),
           name='category_delete'),
+     path('categories/export/csv/', views.category_export_csv,
+          name='category_export_csv'),
 ]

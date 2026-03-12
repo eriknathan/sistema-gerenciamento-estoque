@@ -12,4 +12,6 @@ urlpatterns = [
           name='brand_update'),
      path('brands/<int:pk>/delete/', views.BrandDeleteView.as_view(),
           name='brand_delete'),
+     path('brands/export/csv/', views.brand_export_csv,
+          name='brand_export_csv'),
 ]
